@@ -20,9 +20,9 @@ namespace Reefresher
             _appToPoke = Process.GetProcessesByName("Teams").FirstOrDefault();
             int seconds = 45;
             int milliseconds = seconds * 1000;
-            _timer = new Timer(SendF15, null, 0, milliseconds);
-            
-            //Console.ReadLine();
+            //_timer = new Timer(SendF15, null, 0, milliseconds);
+            _timer = new Timer(SendInFocus, null, 0, milliseconds);
+            Console.ReadLine();
         }
 
         private static void SendF15(Object o) 
@@ -35,6 +35,18 @@ namespace Reefresher
             }
             
             Console.WriteLine("In TimerCallback: " + DateTime.Now);
+        }
+
+        private static void SendInFocus(Object o)
+        {
+            Process _appToPoke2 = Process.GetProcessesByName("notepad++").FirstOrDefault();
+            if (_appToPoke2 != null)
+            {
+                IntPtr handle = _appToPoke2.MainWindowHandle;
+                SetForegroundWindow(handle);
+                SendKeys.SendWait("f");
+                //Console.WriteLine("In TimerCallback: " + DateTime.Now);
+            }
         }
     }
 }
